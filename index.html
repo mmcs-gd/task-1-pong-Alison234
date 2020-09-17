@@ -7,11 +7,37 @@
     * { margin:0; padding:0; }
     html, body { width:100%; height:100%; }
     canvas { display:block; }
+	div{height: 10px;
+	width: 100px;
+	position: absolute;}
+	button{
+		left: 45%;
+		top: 55%;
+		width: 100px;
+		height: 10px;
+		position: absolute;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		visibility: hidden;
+		font-weight: 700;
+		color: white;
+		text-decoration: none;
+		padding: .8em 1em calc(.8em + 3px);
+		border-radius: 3px;
+		background: rgb(64, 199, 129);
+		box-shadow: 0 -3px rgb(53,167,110) inset;
+		transition: 0.2s;
+	}
   </style>
 </head>
 
 <body>
-	<canvas width="100%" height="100%" id='cnvs'></canvas>
+<div id = 'score'></div>
+
+<button id = 'restart'>Рестарт</button>
+
+<canvas width="100%" height="100%" id='cnvs'></canvas>
 	<script src="./src/index.js"></script>
 </body>
 </html>
