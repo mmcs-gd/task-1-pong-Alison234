@@ -3,6 +3,9 @@ const score = document.getElementById('score');
 const restart = document.getElementById('restart')
 const gameState = {};
 
+score.style.color = "#9723e0";
+score.style.fontSize = '30px';
+
 function onMouseMove(e) {
     gameState.pointer.x = e.pageX;
     gameState.pointer.y = e.pageY;
@@ -112,6 +115,7 @@ function run(tFrame) {
 }
 
 function stopGame(handle) {
+    timerStop();
     window.cancelAnimationFrame(handle);
 }
 
@@ -176,11 +180,14 @@ function setup() {
     gameState.tickLength = 15; //ms
     gameState.isLose = false;
     gameState.TotalScore = 0;
+    gameState.bonusTimer = 0;
+    gameState.scoreTimer = 0;
+    gameState.speedTimer = 0;
 
     let randomStartAngel = getRandomIntInclusive(-100,100)/10;
     gameState.platform = {
         width: 400,
-        height: 50,
+        height: 30,
     };
     gameState.player = {
         x: 100,
@@ -201,19 +208,24 @@ function setup() {
     }
 }
 
+function  timerStop(){
+    clearInterval(gameState.scoreTimer);
+    clearInterval(gameState.bonusTimer);
+    clearInterval(gameState.speedTimer);
+}
+
 function timer(){
-    setInterval(function (){
-        gameState.TotalScore ++;
-    },1000);
-    setInterval(function (){
-        if(!gameState.IsBonus) {
-            setupBonus();
-        }
-    },15000);
-    setInterval(function (){
-        gameState.ball.vx += gameState.ball.vx * 0.1;
-        gameState.ball.vy += gameState.ball.vy * 0.1;
-    },10000);
+    gameState.scoreTimer  = setInterval(function () {
+            gameState.TotalScore++;
+        }, 1000);
+    gameState.bonusTimer = setInterval(function () {
+                setupBonus();
+        }, 15000);
+    gameState.speedTimer =  setInterval(function () {
+                gameState.ball.vx += gameState.ball.vx * 0.1;
+                gameState.ball.vy += gameState.ball.vy * 0.1;
+        }, 10000);
+
 }
 
 function getRandomIntInclusive(min, max) {
