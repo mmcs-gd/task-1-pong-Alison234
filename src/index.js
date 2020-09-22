@@ -62,15 +62,25 @@ function update(tick) {
     Conclusion();
 }
 
+function equalMas (a,b){
+    for(let i = 0;i<a.length;i++){
+        if(a[i]!=b[i]){
+            return  false;
+        }
+    }
+    return true;
+}
 function  Conclusion(){
 
-    if(gameState.ball.y > gameState.player.y - gameState.platform.height && (gameState.ball.x  > gameState.player.x -  gameState.platform.width/2 &&
-        gameState.ball.x  < gameState.player.x + gameState.platform.width/2)){
-        gameState.ball.vy = -1*gameState.ball.vy;
-        console.log('Кординаты мяча: x' + gameState.ball.x + ' y ' + gameState.ball.y);
-        console.log('Кординаты платформф: x' + gameState.player.x + ' y ' + gameState.player.y);
-    }
-    if(gameState.ball.y > canvas.offsetHeight){
+    const ball = gameState.ball;
+    IspunchBall = ball.vy > 0;
+        if(ball.y + ball.radius >= gameState.player.y - gameState.player.height/2  && (ball.x  >= gameState.player.x -  gameState.platform.width/2 &&
+            ball.x  <= gameState.player.x + gameState.platform.width/2 &&  IspunchBall)){
+            gameState.ball.vy = -1*gameState.ball.vy;
+            IspunchBall = !IspunchBall;
+        }
+
+    if(gameState.ball.y - ball.radius > canvas.offsetHeight){
         gameState.isLose = true;
         stopGame(gameState.stopCycle);
     }
@@ -191,7 +201,7 @@ function setup() {
     };
     gameState.player = {
         x: 100,
-        y: canvas.height - gameState.platform.height / 2,
+        y: canvas.height - gameState.platform.height/2,
         width: gameState.platform.width,
         height: gameState.platform.height
     };
